@@ -23,11 +23,19 @@ func main() {
 		"MXMXAXMASX",
 	}
 
-	forwardAndBackwardCount := countForwardAndBackwardWords(testLines)
+	forwardAndBackwardCount := countHorizontal(testLines)
 	fmt.Println(forwardAndBackwardCount)
 }
 
-func countForwardAndBackwardWords(lines []string) int {
+func countHorizontal(lines []string) int {
+	str := ""
+	for _, l := range lines {
+		str += l
+	}
+	return countXMAS(str)
+}
+
+func countXMAS(str string) int {
 	forwardRegex, err := regexp.Compile(`XMAS`)
 	if err != nil {
 		log.Fatal("Cannot compile regex")
@@ -38,11 +46,7 @@ func countForwardAndBackwardWords(lines []string) int {
 	}
 
 	count := 0
-
-	for _, line := range lines {
-		count += len(forwardRegex.FindAllString(line, -1))
-		count += len(backwardRegex.FindAllString(line, -1))
-	}
-
+	count += len(forwardRegex.FindAllString(str, -1))
+	count += len(backwardRegex.FindAllString(str, -1))
 	return count
 }
