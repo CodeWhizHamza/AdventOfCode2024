@@ -7,28 +7,28 @@ import (
 )
 
 func main() {
-	// lines := getLines()
-	// charactersMatrix := getCharactersMatrix(lines)
+	lines := getLines()
+	charactersMatrix := getCharactersMatrix(lines)
 
-	testLines := []string{
-		"MMMSXXMASM",
-		"MSAMXMSMSA",
-		"AMXSXMAAMM",
-		"MSAMASMSMX",
-		"XMASAMXAMM",
-		"XXAMMXXAMA",
-		"SMSMSASXSS",
-		"SAXAMASAAA",
-		"MAMMMXMMMM",
-		"MXMXAXMASX",
-	}
-	testCharMatrix := getCharactersMatrix(testLines)
+	// testLines := []string{
+	// 	"MMMSXXMASM",
+	// 	"MSAMXMSMSA",
+	// 	"AMXSXMAAMM",
+	// 	"MSAMASMSMX",
+	// 	"XMASAMXAMM",
+	// 	"XXAMMXXAMA",
+	// 	"SMSMSASXSS",
+	// 	"SAXAMASAAA",
+	// 	"MAMMMXMMMM",
+	// 	"MXMXAXMASX",
+	// }
+	// testCharMatrix := getCharactersMatrix(testLines)
 
 	var (
-		horizontalCount        int = countHorizontal(testLines)
-		verticalCount          int = countVertical(testCharMatrix)
-		mainDiagonalCount      int = countMainDiagonal(testCharMatrix)
-		secondaryDiagonalCount int = countSecondaryDiagonal(testCharMatrix)
+		horizontalCount        int = countHorizontal(lines)
+		verticalCount          int = countVertical(charactersMatrix)
+		mainDiagonalCount      int = countMainDiagonal(charactersMatrix)
+		secondaryDiagonalCount int = countSecondaryDiagonal(charactersMatrix)
 	)
 
 	fmt.Println("Horizontal Count:", horizontalCount)
@@ -69,8 +69,8 @@ func countMainDiagonal(charactersMatrix [][]string) int {
 	forward and backward with overlapping in it.
 	*/
 	diagonalStrings := []string{}
-
 	diagonalsCount := len(charactersMatrix) + len(charactersMatrix[0]) - 1
+
 	for i := 0; i < diagonalsCount; i++ {
 		var (
 			row = 0
@@ -102,8 +102,7 @@ func countMainDiagonal(charactersMatrix [][]string) int {
 }
 
 func countSecondaryDiagonal(charactersMatrix [][]string) int {
-	str := ""
-
+	diagonalStrings := []string{}
 	diagonalsCount := len(charactersMatrix) + len(charactersMatrix[0]) - 1
 	for i := 0; i < diagonalsCount; i++ {
 		var (
@@ -117,14 +116,23 @@ func countSecondaryDiagonal(charactersMatrix [][]string) int {
 			col = len(charactersMatrix[0]) - 1
 		}
 
+		diagonalString := ""
 		for row < len(charactersMatrix) && col >= 0 {
-			str += charactersMatrix[row][col]
+			diagonalString += charactersMatrix[row][col]
 			row += 1
 			col -= 1
 		}
+		if len(diagonalString) < 4 {
+			continue
+		}
+		diagonalStrings = append(diagonalStrings, diagonalString)
 	}
 
-	return countXMAS(str)
+	count := 0
+	for _, d := range diagonalStrings {
+		count += countXMAS(d)
+	}
+	return count
 }
 
 func countXMAS(str string) int {
