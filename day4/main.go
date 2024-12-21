@@ -5,5 +5,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello World!")
+	lines := getLines()
+	charactersMatrix := getCharactersMatrix(lines)
+	fmt.Println(charactersMatrix)
 }
