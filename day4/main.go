@@ -68,7 +68,7 @@ func countMainDiagonal(charactersMatrix [][]string) int {
 	Add all of it in a single string, and then count xmas
 	forward and backward with overlapping in it.
 	*/
-	str := ""
+	diagonalStrings := []string{}
 
 	diagonalsCount := len(charactersMatrix) + len(charactersMatrix[0]) - 1
 	for i := 0; i < diagonalsCount; i++ {
@@ -82,14 +82,23 @@ func countMainDiagonal(charactersMatrix [][]string) int {
 			row = i - len(charactersMatrix[0]) + 1
 		}
 
+		diagonalString := ""
 		for row < len(charactersMatrix) && col < len(charactersMatrix[0]) {
-			str += charactersMatrix[row][col]
+			diagonalString += charactersMatrix[row][col]
 			row += 1
 			col += 1
 		}
+		if len(diagonalString) < 4 {
+			continue
+		}
+		diagonalStrings = append(diagonalStrings, diagonalString)
 	}
 
-	return countXMAS(str)
+	count := 0
+	for _, d := range diagonalStrings {
+		count += countXMAS(d)
+	}
+	return count
 }
 
 func countSecondaryDiagonal(charactersMatrix [][]string) int {
