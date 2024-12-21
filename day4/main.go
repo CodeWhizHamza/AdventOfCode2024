@@ -10,23 +10,17 @@ func main() {
 	// lines := getLines()
 	// charactersMatrix := getCharactersMatrix(lines)
 
-	// testLines := []string{
-	// 	"MMMSXXMASM",
-	// 	"MSAMXMSMSA",
-	// 	"AMXSXMAAMM",
-	// 	"MSAMASMSMX",
-	// 	"XMASAMXAMM",
-	// 	"XXAMMXXAMA",
-	// 	"SMSMSASXSS",
-	// 	"SAXAMASAAA",
-	// 	"MAMMMXMMMM",
-	// 	"MXMXAXMASX",
-	// }
 	testLines := []string{
-		"ABCD",
-		"BCDA",
-		"CDAB",
-		"DABC",
+		"MMMSXXMASM",
+		"MSAMXMSMSA",
+		"AMXSXMAAMM",
+		"MSAMASMSMX",
+		"XMASAMXAMM",
+		"XXAMMXXAMA",
+		"SMSMSASXSS",
+		"SAXAMASAAA",
+		"MAMMMXMMMM",
+		"MXMXAXMASX",
 	}
 	testCharMatrix := getCharactersMatrix(testLines)
 
@@ -41,6 +35,8 @@ func main() {
 	fmt.Println("Vertical Count:", verticalCount)
 	fmt.Println("Main Diagonal Count:", mainDiagonalCount)
 	fmt.Println("Secondary Diagonal Count:", secondaryDiagonalCount)
+	fmt.Println("==================================================")
+	fmt.Println("Total:", horizontalCount+verticalCount+mainDiagonalCount+secondaryDiagonalCount)
 
 }
 
