@@ -29,22 +29,32 @@ func main() {
 func SolutionB(lines []string) {
 	charactersMatrix := getCharactersMatrix(lines)
 	count := 0
-	for i := 1; i < len(charactersMatrix)-2; i++ {
-		for j := 1; j < len(charactersMatrix[0])-2; j++ {
-			if charactersMatrix[i][j] != "A" {
-				continue
-			}
-
-			diagonal := charactersMatrix[i-1][j-1] + charactersMatrix[i+1][j+1]
-			secondary := charactersMatrix[i-1][j+1] + charactersMatrix[i+1][j-1]
-
-			if (diagonal == "MS" || diagonal == "SM") && (secondary == "MS" || secondary == "SM") {
+	for i := 0; i < len(charactersMatrix); i++ {
+		for j := 0; j < len(charactersMatrix[0]); j++ {
+			if hasXmas(charactersMatrix, i, j) {
 				count += 1
 			}
 		}
 	}
 
 	fmt.Println("Count:", count)
+}
+
+func hasXmas(m [][]string, i int, j int) bool {
+	if i <= 0 || i >= len(m)-1 || j <= 0 || j >= len(m[0])-1 {
+		return false
+	}
+	if m[i][j] != "A" {
+		return false
+	}
+
+	diagonal := m[i-1][j-1] + m[i+1][j+1]
+	secondary := m[i-1][j+1] + m[i+1][j-1]
+
+	if (diagonal == "MS" || diagonal == "SM") && (secondary == "MS" || secondary == "SM") {
+		return true
+	}
+	return false
 }
 
 func SolutionA(lines []string) {
