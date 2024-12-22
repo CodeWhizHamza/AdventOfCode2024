@@ -8,9 +8,8 @@ import (
 
 func main() {
 	lines := getLines()
-	charactersMatrix := getCharactersMatrix(lines)
 
-	// testLines := []string{
+	// lines := []string{
 	// 	"MMMSXXMASM",
 	// 	"MSAMXMSMSA",
 	// 	"AMXSXMAAMM",
@@ -22,7 +21,31 @@ func main() {
 	// 	"MAMMMXMMMM",
 	// 	"MXMXAXMASX",
 	// }
-	// testCharMatrix := getCharactersMatrix(testLines)
+
+	// SolutionA(lines)
+	SolutionB(lines)
+}
+
+func SolutionB(lines []string) {
+	charactersMatrix := getCharactersMatrix(lines)
+
+	count := 0
+	for i := 0; i < len(charactersMatrix)-3; i++ {
+		for j := 0; j < len(charactersMatrix[0])-3; j++ {
+			diagonal := charactersMatrix[i][j] + charactersMatrix[i+1][j+1] + charactersMatrix[i+2][j+2]
+			secondary := charactersMatrix[i][j+2] + charactersMatrix[i+1][j+1] + charactersMatrix[i+2][j]
+
+			if (diagonal == "MAS" || diagonal == "SAM") && (secondary == "MAS" || secondary == "SAM") {
+				count += 1
+			}
+		}
+	}
+
+	fmt.Println("Count:", count)
+}
+
+func SolutionA(lines []string) {
+	charactersMatrix := getCharactersMatrix(lines)
 
 	var (
 		horizontalCount        int = countHorizontal(lines)
@@ -37,27 +60,27 @@ func main() {
 	fmt.Println("Secondary Diagonal Count:", secondaryDiagonalCount)
 	fmt.Println("==================================================")
 	fmt.Println("Total:", horizontalCount+verticalCount+mainDiagonalCount+secondaryDiagonalCount)
-
 }
 
 func countHorizontal(lines []string) int {
-	str := ""
+	count := 0
 	for _, l := range lines {
-		str += l
+		count += countXMAS(l)
 	}
-	return countXMAS(str)
+	return count
 }
 
 func countVertical(charactersMatrix [][]string) int {
-	str := ""
-
+	count := 0
 	for i := 0; i < len(charactersMatrix); i++ {
+		l := ""
 		for j := 0; j < len(charactersMatrix[0]); j++ {
-			str += charactersMatrix[j][i]
+			l += charactersMatrix[j][i]
 		}
+		count += countXMAS(l)
 	}
 
-	return countXMAS(str)
+	return count
 }
 
 func countMainDiagonal(charactersMatrix [][]string) int {
