@@ -28,14 +28,17 @@ func main() {
 
 func SolutionB(lines []string) {
 	charactersMatrix := getCharactersMatrix(lines)
-
 	count := 0
-	for i := 0; i < len(charactersMatrix)-3; i++ {
-		for j := 0; j < len(charactersMatrix[0])-3; j++ {
-			diagonal := charactersMatrix[i][j] + charactersMatrix[i+1][j+1] + charactersMatrix[i+2][j+2]
-			secondary := charactersMatrix[i][j+2] + charactersMatrix[i+1][j+1] + charactersMatrix[i+2][j]
+	for i := 1; i < len(charactersMatrix)-2; i++ {
+		for j := 1; j < len(charactersMatrix[0])-2; j++ {
+			if charactersMatrix[i][j] != "A" {
+				continue
+			}
 
-			if (diagonal == "MAS" || diagonal == "SAM") && (secondary == "MAS" || secondary == "SAM") {
+			diagonal := charactersMatrix[i-1][j-1] + charactersMatrix[i+1][j+1]
+			secondary := charactersMatrix[i-1][j+1] + charactersMatrix[i+1][j-1]
+
+			if (diagonal == "MS" || diagonal == "SM") && (secondary == "MS" || secondary == "SM") {
 				count += 1
 			}
 		}
