@@ -17,12 +17,45 @@ func main() {
 	rules := readRules()
 	printSequences := readPrintOrders()
 
+	// rules := []Pair{
+	// 	{a: 47, b: 53},
+	// 	{a: 97, b: 13},
+	// 	{a: 97, b: 61},
+	// 	{a: 97, b: 47},
+	// 	{a: 75, b: 29},
+	// 	{a: 61, b: 13},
+	// 	{a: 75, b: 53},
+	// 	{a: 29, b: 13},
+	// 	{a: 97, b: 29},
+	// 	{a: 53, b: 29},
+	// 	{a: 61, b: 53},
+	// 	{a: 97, b: 53},
+	// 	{a: 61, b: 29},
+	// 	{a: 47, b: 13},
+	// 	{a: 75, b: 47},
+	// 	{a: 97, b: 75},
+	// 	{a: 47, b: 61},
+	// 	{a: 75, b: 61},
+	// 	{a: 47, b: 29},
+	// 	{a: 75, b: 13},
+	// 	{a: 53, b: 13},
+	// }
+	// printSequences := [][]int64{
+	// 	{75, 47, 61, 53, 29},
+	// 	{97, 61, 53, 29, 13},
+	// 	{75, 29, 13},
+	// 	{75, 97, 47, 61, 53},
+	// 	{61, 13, 29},
+	// 	{97, 13, 75, 29, 47},
+	// }
+
 	var total int64 = 0
 	for _, sequence := range printSequences {
 		if isValidSequence(sequence, rules) {
 			mid := len(sequence) / 2
 			total += sequence[mid]
-			break
+
+			fmt.Println(sequence)
 		}
 	}
 
@@ -30,7 +63,22 @@ func main() {
 }
 
 func isValidSequence(s []int64, rules []Pair) bool {
+	for i, v := range s {
+		for _, next := range s[i+1:] {
+			filtered := []Pair{}
+			for _, r := range rules {
+				if r.a == next {
+					filtered = append(filtered, r)
+				}
+			}
 
+			for _, r := range filtered {
+				if r.b == v {
+					return false
+				}
+			}
+		}
+	}
 	return true
 }
 
